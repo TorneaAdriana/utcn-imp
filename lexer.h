@@ -48,6 +48,14 @@ public:
     COMMA,
     PLUS,
     // Complex tokens.
+
+    //define multiplication
+    MUL,
+
+    //define equality
+    EQ,
+
+
     INT,
     STRING,
     IDENT,
@@ -113,6 +121,10 @@ public:
   static Token While(const Location &l) { return Token(l, Kind::WHILE); }
   static Token Ident(const Location &l, const std::string &str);
   static Token String(const Location &l, const std::string &str);
+
+//define Token for eq and mul
+  static Token DoubleEq(const Location &l){ return Token(l, Kind::EQ); }
+  static Token Mul(const Location &l){ return Token(l, Kind::MUL); }
 
 
   /// PROBLEM 2

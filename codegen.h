@@ -161,6 +161,10 @@ private:
   /// Emit an unconditional jump.
   void EmitJump(Label label);
 
+   void EmitMul();
+
+  void EmitEq();
+
   /// Emit some bytes of code.
   template<typename T>
   void Emit(const T &t);

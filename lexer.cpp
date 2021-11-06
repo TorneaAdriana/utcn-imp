@@ -196,9 +196,19 @@ const Token &Lexer::Next()
     case '}': return NextChar(), tk_ = Token::RBrace(loc);
     case ':': return NextChar(), tk_ = Token::Colon(loc);
     case ';': return NextChar(), tk_ = Token::Semi(loc);
-    case '=': return NextChar(), tk_ = Token::Equal(loc);
+    
     case '+': return NextChar(), tk_ = Token::Plus(loc);
     case ',': return NextChar(), tk_ = Token::Comma(loc);
+
+    case '*':return NextChar(),tk_=Token::Mul(loc);
+    case '=': {
+      NextChar();
+      if(chr_=='='){
+        return NextChar(), tk_ = Token::DoubleEq(loc);
+      }
+      return tk_ = Token::Equal(loc);
+    }
+    
     case '"': {
       std::string word;
       NextChar();

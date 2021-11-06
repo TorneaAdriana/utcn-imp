@@ -212,6 +212,12 @@ void Codegen::LowerBinaryExpr(const Scope &scope, const BinaryExpr &binary)
     case BinaryExpr::Kind::ADD: {
       return EmitAdd();
     }
+    case BinaryExpr::Kind::MUL: {
+      return EmitMul();
+    }
+    case BinaryExpr::Kind::EQ: {
+      return EmitEq();
+    }
   }
 }
 
@@ -349,6 +355,22 @@ void Codegen::EmitAdd()
   assert(depth_ > 0 && "no elements on stack");
   depth_ -= 1;
   Emit<Opcode>(Opcode::ADD);
+}
+
+
+//for mul
+void Codegen::EmitMul()
+{
+  assert(depth_ > 0 && "no elements on stack");
+  depth_ -= 1;
+  Emit<Opcode>(Opcode::MUL);
+}
+
+void Codegen::EmitEq()
+{
+  assert(depth_ > 0 && "no elements on stack");
+  depth_ -= 1;
+  Emit<Opcode>(Opcode::EQ);
 }
 
 // -----------------------------------------------------------------------------

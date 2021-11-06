@@ -89,6 +89,7 @@ std::shared_ptr<Stmt> Parser::ParseStmt()
     case Token::Kind::RETURN: return ParseReturnStmt();
     case Token::Kind::WHILE: return ParseWhileStmt();
     case Token::Kind::LBRACE: return ParseBlockStmt();
+  
     default: return std::make_shared<ExprStmt>(ParseExpr());
   }
 }
@@ -181,15 +182,40 @@ std::shared_ptr<Expr> Parser::ParseCallExpr()
 // -----------------------------------------------------------------------------
 std::shared_ptr<Expr> Parser::ParseAddSubExpr()
 {
-  std::shared_ptr<Expr> term = ParseCallExpr();
+  std::shared_ptr<Expr> term = ParseMulSubExpr();
   while (Current().Is(Token::Kind::PLUS)) {
     lexer_.Next();
-    auto rhs = ParseCallExpr();
+    auto rhs = ParseMulSubExpr();
     term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::ADD, term, rhs);
   }
   return term;
 }
 
+
+
+//equal
+std::shared_ptr<Expr> Parser::ParseEqualSubExpr()
+{
+  std::shared_ptr<Expr> term = ParseAddSubExpr();
+  while (Current().Is(Token::Kind::EQ)) {
+    lexer_.Next();
+    auto rhs = ParseAddSubExpr();
+    term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::EQ, term, rhs);
+  }
+  return term;
+}
+
+//multiply
+std::shared_ptr<Expr> Parser::ParseMulSubExpr()
+{
+  std::shared_ptr<Expr> term = ParseCallExpr();
+  while (Current().Is(Token::Kind::MUL)) {
+    lexer_.Next();
+    auto rhs = ParseCallExpr();
+    term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::MUL, term, rhs);
+  }
+  return term;
+}
 // -----------------------------------------------------------------------------
 const Token &Parser::Expect(Token::Kind kind)
 {

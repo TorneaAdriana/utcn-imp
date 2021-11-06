@@ -76,6 +76,39 @@ void Interp::Run()
         continue;
       }
 
+
+      case Opcode::MUL:{
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+
+        int64_t multiply = (uint64_t)rhs * (uint64_t)lhs;
+        
+        bool b_rhs = rhs >> 63;
+        bool b_lhs = lhs >> 63;
+        bool b_multiply = multiply >> 63;
+        
+        // if(!b_rhs && !b_lhs && b_multiply == 1){
+        //   throw RuntimeError("ADD operation overflow for positive values.");
+        // }
+
+        // if(b_rhs && b_lhs && b_multiply == 0){
+        //   throw RuntimeError("ADD operation overflow for negative values.");
+        // }
+        Push(multiply);
+        continue;
+      }
+
+
+  case Opcode::EQ: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+
+        int64_t rez = (rhs==lhs) ? 1 : 0;
+        Push(rez);
+        continue;
+      }
+
+
       case Opcode::RET: {
         auto depth = prog_.Read<unsigned>(pc_);
         auto nargs = prog_.Read<unsigned>(pc_);

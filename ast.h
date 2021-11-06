@@ -96,7 +96,11 @@ class BinaryExpr : public Expr {
 public:
   /// Enumeration of binary operators.
   enum class Kind {
-    ADD
+    ADD,
+    
+    //define operators
+    MUL,
+    EQ,
   };
 
 public:

@@ -22,6 +22,10 @@ enum class Opcode : uint8_t {
   PUSH_INT,
 
   ADD,
+  //multiply
+  MUL,
+  //equality
+  EQ,
   RET,
 
   JUMP_FALSE,
